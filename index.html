@@ -1,0 +1,1118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Oualid Arrich — Digital Marketing & Data Analytics</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --ink: #0f0e0b;
+    --ink-2: #3d3b34;
+    --ink-3: #7a7870;
+    --paper: #f5f2eb;
+    --paper-2: #ece9e0;
+    --paper-3: #e0dcd2;
+    --accent: #c8410a;
+    --accent-2: #e8956a;
+    --accent-light: #f7ede6;
+    --teal: #1a6b5a;
+    --teal-light: #e1f0ec;
+    --line: rgba(15,14,11,0.12);
+    --radius: 4px;
+    --gap: clamp(3rem, 8vw, 7rem);
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--paper);
+    color: var(--ink);
+    font-size: 16px;
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  /* ─── NAV ─── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1.2rem 5vw;
+    background: var(--paper);
+    border-bottom: 1px solid var(--line);
+    backdrop-filter: blur(8px);
+  }
+  .nav-logo {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800; font-size: 1.1rem;
+    letter-spacing: -0.02em; color: var(--ink);
+    text-decoration: none;
+  }
+  .nav-links { display: flex; gap: 2rem; list-style: none; }
+  .nav-links a {
+    text-decoration: none; color: var(--ink-2);
+    font-size: 0.875rem; font-weight: 400;
+    letter-spacing: 0.02em;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--accent); }
+  .nav-cta {
+    background: var(--ink); color: var(--paper) !important;
+    padding: 0.45rem 1.1rem;
+    border-radius: 2px;
+    transition: background 0.2s !important;
+  }
+  .nav-cta:hover { background: var(--accent) !important; color: var(--paper) !important; }
+
+  /* ─── HERO ─── */
+  #hero {
+    min-height: 100svh;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    padding: 0 5vw;
+    padding-top: 5rem;
+    gap: 0;
+    position: relative;
+    overflow: hidden;
+    background: #0d0c09;
+  }
+  #spline-canvas {
+    position: absolute;
+    inset: 0;
+    width: 100%; height: 100%;
+    z-index: 0;
+    pointer-events: none;
+  }
+  .hero-left {
+    position: relative; z-index: 2;
+    padding: 2rem 0;
+  }
+  .hero-tag {
+    display: inline-block;
+    font-size: 0.75rem; letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent-2);
+    border: 1px solid rgba(232,149,106,0.35);
+    padding: 0.3rem 0.8rem;
+    border-radius: 2px;
+    margin-bottom: 1.5rem;
+    background: rgba(200,65,10,0.12);
+  }
+  h1.hero-name {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: clamp(3rem, 6vw, 5.5rem);
+    line-height: 1;
+    letter-spacing: -0.03em;
+    color: #f5f2eb;
+    margin-bottom: 1rem;
+  }
+  h1.hero-name span { color: var(--accent-2); }
+  .hero-role {
+    font-size: clamp(1rem, 1.5vw, 1.15rem);
+    color: rgba(245,242,235,0.55);
+    font-weight: 300;
+    margin-bottom: 2rem;
+    max-width: 420px;
+    line-height: 1.65;
+  }
+  .hero-btns { display: flex; gap: 1rem; flex-wrap: wrap; }
+  .btn {
+    display: inline-block; padding: 0.75rem 1.8rem;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.875rem; font-weight: 500;
+    text-decoration: none; border-radius: 2px;
+    transition: all 0.2s;
+    cursor: pointer; border: none;
+  }
+  .btn-primary { background: var(--accent); color: #f5f2eb; }
+  .btn-primary:hover { background: #a8340a; }
+  .btn-outline {
+    background: transparent; color: rgba(245,242,235,0.8);
+    border: 1px solid rgba(245,242,235,0.2);
+  }
+  .btn-outline:hover { border-color: rgba(245,242,235,0.5); color: #f5f2eb; }
+
+  .hero-right {
+    position: relative; z-index: 2;
+    display: flex; flex-direction: column;
+    align-items: flex-end; justify-content: center;
+    padding: 2rem 0;
+    gap: 1rem;
+  }
+  .hero-stats {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 1px;
+    background: rgba(245,242,235,0.06);
+    border: 1px solid rgba(245,242,235,0.08);
+    border-radius: var(--radius);
+    overflow: hidden;
+    width: 100%;
+    max-width: 380px;
+  }
+  .stat-box {
+    background: rgba(13,12,9,0.55);
+    backdrop-filter: blur(12px);
+    padding: 1.6rem;
+    transition: background 0.2s;
+  }
+  .stat-box:hover { background: rgba(200,65,10,0.1); }
+  .stat-num {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800; font-size: 2.4rem;
+    letter-spacing: -0.04em;
+    color: #f5f2eb;
+    line-height: 1;
+    margin-bottom: 0.3rem;
+  }
+  .stat-num span { color: var(--accent-2); }
+  .stat-label {
+    font-size: 0.75rem; color: rgba(245,242,235,0.4);
+    text-transform: uppercase; letter-spacing: 0.08em;
+  }
+  .hero-scroll-hint {
+    position: absolute;
+    bottom: 2rem; left: 50%; transform: translateX(-50%);
+    z-index: 2;
+    display: flex; flex-direction: column; align-items: center; gap: 0.5rem;
+    color: rgba(245,242,235,0.3);
+    font-size: 0.7rem; letter-spacing: 0.12em; text-transform: uppercase;
+    animation: bounce 2s ease-in-out infinite;
+  }
+  .hero-scroll-hint svg { opacity: 0.4; }
+  @keyframes bounce { 0%,100%{ transform: translateX(-50%) translateY(0); } 50%{ transform: translateX(-50%) translateY(6px); } }
+
+  /* ─── MARQUEE ─── */
+  .marquee-wrap {
+    overflow: hidden;
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+    background: var(--ink);
+    padding: 0.9rem 0;
+  }
+  .marquee-track {
+    display: flex; gap: 3rem;
+    white-space: nowrap;
+    animation: marquee 25s linear infinite;
+  }
+  .marquee-track span {
+    font-family: 'Syne', sans-serif;
+    font-size: 0.8rem; letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--paper-2);
+    opacity: 0.7;
+    flex-shrink: 0;
+  }
+  .marquee-track span.accent-mark { color: var(--accent-2); opacity: 1; }
+  @keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+  /* ─── SECTIONS ─── */
+  section { padding: var(--gap) 5vw; }
+
+  .section-header {
+    display: flex; align-items: baseline; gap: 1.5rem;
+    margin-bottom: 3.5rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid var(--line);
+  }
+  .section-num {
+    font-family: 'Syne', sans-serif;
+    font-size: 0.75rem; font-weight: 700;
+    color: var(--accent); letter-spacing: 0.1em;
+  }
+  h2.section-title {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+    letter-spacing: -0.03em;
+    color: var(--ink);
+    line-height: 1.05;
+  }
+
+  /* ─── ABOUT ─── */
+  #about { background: var(--paper-2); }
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: start;
+  }
+  .about-text p { color: var(--ink-2); margin-bottom: 1.2rem; font-weight: 300; font-size: 1.05rem; }
+  .about-text strong { color: var(--ink); font-weight: 500; }
+  .about-highlight {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(1.1rem, 2vw, 1.5rem);
+    font-weight: 700;
+    line-height: 1.3;
+    color: var(--ink);
+    border-left: 3px solid var(--accent);
+    padding-left: 1.2rem;
+    margin: 2rem 0;
+  }
+  .about-certs { display: flex; flex-direction: column; gap: 1rem; }
+  .cert-item {
+    display: flex; align-items: center; gap: 1rem;
+    padding: 1rem 1.2rem;
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    transition: border-color 0.2s, transform 0.2s;
+  }
+  .cert-item:hover { border-color: var(--accent-2); transform: translateX(4px); }
+  .cert-icon {
+    width: 36px; height: 36px; border-radius: 6px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.1rem; flex-shrink: 0;
+    background: var(--accent-light);
+  }
+  .cert-info { flex: 1; }
+  .cert-name { font-weight: 500; font-size: 0.9rem; color: var(--ink); }
+  .cert-org { font-size: 0.78rem; color: var(--ink-3); }
+
+  /* ─── SKILLS ─── */
+  #skills { background: var(--paper); }
+  .skills-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+  }
+  .skill-card {
+    background: var(--paper-2);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 2rem;
+    transition: border-color 0.2s, transform 0.2s;
+  }
+  .skill-card:hover { border-color: var(--accent-2); transform: translateY(-3px); }
+  .skill-cat {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700; font-size: 0.7rem;
+    text-transform: uppercase; letter-spacing: 0.12em;
+    color: var(--accent); margin-bottom: 1rem;
+  }
+  .skill-card h3 {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800; font-size: 1.1rem;
+    color: var(--ink); margin-bottom: 1rem;
+    letter-spacing: -0.02em;
+  }
+  .skill-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+  .skill-tag {
+    font-size: 0.78rem; padding: 0.3rem 0.7rem;
+    background: var(--paper); border: 1px solid var(--line);
+    border-radius: 2px; color: var(--ink-2);
+  }
+
+  /* ─── PROJECTS ─── */
+  #projects { background: var(--paper-2); }
+  .projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+  }
+  .project-card {
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    overflow: hidden;
+    transition: border-color 0.2s, transform 0.2s;
+    display: flex; flex-direction: column;
+  }
+  .project-card:hover { border-color: var(--accent); transform: translateY(-4px); }
+  .project-thumb {
+    height: 180px;
+    background: var(--paper-3);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 3rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .project-thumb::after {
+    content: '';
+    position: absolute; inset: 0;
+    background: linear-gradient(to bottom, transparent 60%, rgba(15,14,11,0.08));
+  }
+  .project-body { padding: 1.5rem; flex: 1; display: flex; flex-direction: column; }
+  .project-tag {
+    display: inline-block;
+    font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--teal); background: var(--teal-light);
+    padding: 0.2rem 0.6rem; border-radius: 2px;
+    margin-bottom: 0.8rem;
+  }
+  .project-card h3 {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700; font-size: 1.1rem;
+    color: var(--ink); margin-bottom: 0.6rem;
+    letter-spacing: -0.02em;
+  }
+  .project-card p { font-size: 0.875rem; color: var(--ink-2); font-weight: 300; flex: 1; }
+  .project-footer {
+    margin-top: 1.2rem; padding-top: 1rem;
+    border-top: 1px solid var(--line);
+    display: flex; align-items: center; justify-content: space-between;
+    font-size: 0.78rem; color: var(--ink-3);
+  }
+  .project-link {
+    font-size: 0.8rem; font-weight: 500;
+    color: var(--accent); text-decoration: none;
+    display: flex; align-items: center; gap: 0.3rem;
+  }
+  .project-link:hover { text-decoration: underline; }
+
+  /* ─── EXPERIENCE ─── */
+  #experience { background: var(--paper); }
+  .timeline { display: flex; flex-direction: column; gap: 0; }
+  .timeline-item {
+    display: grid; grid-template-columns: 220px 1fr;
+    gap: 3rem; padding: 2.5rem 0;
+    border-bottom: 1px solid var(--line);
+    align-items: start;
+  }
+  .timeline-item:last-child { border-bottom: none; }
+  .timeline-date { font-size: 0.825rem; color: var(--ink-3); padding-top: 0.3rem; }
+  .timeline-date strong { display: block; font-size: 0.95rem; font-weight: 500; color: var(--ink); margin-bottom: 0.2rem; }
+  .timeline-content h3 {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700; font-size: 1.1rem;
+    color: var(--ink); letter-spacing: -0.02em; margin-bottom: 0.3rem;
+  }
+  .timeline-content .org { font-size: 0.875rem; color: var(--accent); font-weight: 500; margin-bottom: 0.8rem; }
+  .timeline-content p { font-size: 0.9rem; color: var(--ink-2); font-weight: 300; }
+  .timeline-content ul { font-size: 0.9rem; color: var(--ink-2); font-weight: 300; padding-left: 1.2rem; }
+  .timeline-content ul li { margin-bottom: 0.3rem; }
+
+  /* ─── CONTACT ─── */
+  #contact { background: var(--ink); }
+  #contact .section-header { border-bottom-color: rgba(255,255,255,0.1); }
+  #contact .section-num { color: var(--accent-2); }
+  #contact h2.section-title { color: var(--paper); }
+  .contact-grid {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 4rem; align-items: start;
+  }
+  .contact-left p { color: rgba(245,242,235,0.6); font-weight: 300; margin-bottom: 2rem; font-size: 1.05rem; }
+  .contact-info { display: flex; flex-direction: column; gap: 1rem; }
+  .contact-row {
+    display: flex; align-items: center; gap: 1rem;
+    padding: 1rem 1.2rem;
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: var(--radius);
+    transition: border-color 0.2s;
+  }
+  .contact-row:hover { border-color: rgba(255,255,255,0.2); }
+  .contact-row-icon {
+    width: 32px; height: 32px; flex-shrink: 0;
+    background: rgba(200,65,10,0.2);
+    border-radius: 4px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.9rem;
+  }
+  .contact-row-label { font-size: 0.75rem; color: rgba(245,242,235,0.4); text-transform: uppercase; letter-spacing: 0.08em; }
+  .contact-row-value { font-size: 0.9rem; color: var(--paper); }
+  .contact-row-value a { color: var(--accent-2); text-decoration: none; }
+  .contact-row-value a:hover { text-decoration: underline; }
+
+  .contact-form { display: flex; flex-direction: column; gap: 1rem; }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+  .form-field { display: flex; flex-direction: column; gap: 0.4rem; }
+  .form-field label { font-size: 0.75rem; color: rgba(245,242,235,0.5); text-transform: uppercase; letter-spacing: 0.08em; }
+  .form-field input,
+  .form-field textarea {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: var(--radius);
+    padding: 0.75rem 1rem;
+    color: var(--paper);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.9rem;
+    width: 100%;
+    transition: border-color 0.2s;
+    outline: none;
+  }
+  .form-field input:focus,
+  .form-field textarea:focus { border-color: var(--accent-2); }
+  .form-field textarea { resize: vertical; min-height: 120px; }
+  .btn-send {
+    background: var(--accent); color: var(--paper);
+    border: none; border-radius: var(--radius);
+    padding: 0.9rem 2rem;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.9rem; font-weight: 500;
+    cursor: pointer;
+    transition: background 0.2s;
+    align-self: flex-start;
+  }
+  .btn-send:hover { background: #a8340a; }
+  .form-success {
+    display: none;
+    color: #5DCAA5;
+    font-size: 0.875rem;
+    margin-top: 0.5rem;
+  }
+
+  .social-links {
+    display: flex; gap: 1rem; margin-top: 2rem;
+  }
+  .social-link {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    text-decoration: none;
+    font-size: 0.825rem; font-weight: 500;
+    color: rgba(245,242,235,0.6);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 2px; padding: 0.5rem 1rem;
+    transition: all 0.2s;
+  }
+  .social-link:hover { color: var(--paper); border-color: rgba(255,255,255,0.3); }
+
+  /* ─── FOOTER ─── */
+  footer {
+    background: var(--ink);
+    border-top: 1px solid rgba(255,255,255,0.06);
+    padding: 1.5rem 5vw;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  footer p { font-size: 0.78rem; color: rgba(245,242,235,0.3); }
+
+  /* ─── MOBILE ─── */
+  @media (max-width: 768px) {
+    #hero { grid-template-columns: 1fr; gap: 2.5rem; }
+    .about-grid, .contact-grid { grid-template-columns: 1fr; gap: 2rem; }
+    .skills-grid { grid-template-columns: 1fr; }
+    .timeline-item { grid-template-columns: 1fr; gap: 0.5rem; }
+    .form-row { grid-template-columns: 1fr; }
+    .nav-links { display: none; }
+    .hero-bg-text { font-size: 5rem; }
+    h1.hero-name { font-size: 2.8rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#hero" class="nav-logo">OA</a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#contact" class="nav-cta">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <canvas id="spline-canvas"></canvas>
+  <div class="hero-left">
+    <div class="hero-tag">Available for opportunities in Europe</div>
+    <h1 class="hero-name">Oualid<br><span>Arrich</span></h1>
+    <p class="hero-role">Digital Marketing & Data Analytics specialist — turning community insight and data into brand impact. Based in Morocco, open to Europe.</p>
+    <div class="hero-btns">
+      <a href="#projects" class="btn btn-primary">View My Work</a>
+      <a href="#contact" class="btn btn-outline">Get In Touch</a>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="hero-stats">
+      <div class="stat-box">
+        <div class="stat-num">2<span>+</span></div>
+        <div class="stat-label">Years experience</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-num">5<span>+</span></div>
+        <div class="stat-label">Certifications</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-num">3<span>k+</span></div>
+        <div class="stat-label">AFCON volunteers</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-num"><span>🇲🇦</span></div>
+        <div class="stat-label">Based in Morocco</div>
+      </div>
+    </div>
+  </div>
+  <div class="hero-scroll-hint" aria-hidden="true">
+    <span>Scroll</span>
+    <svg width="12" height="16" viewBox="0 0 12 16" fill="none"><path d="M6 0v14M1 9l5 5 5-5" stroke="currentColor" stroke-width="1.2"/></svg>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee-wrap" aria-hidden="true">
+  <div class="marquee-track">
+    <span>Digital Marketing</span><span class="accent-mark">✦</span>
+    <span>Data Analytics</span><span class="accent-mark">✦</span>
+    <span>Community Management</span><span class="accent-mark">✦</span>
+    <span>Python</span><span class="accent-mark">✦</span>
+    <span>Social Media Strategy</span><span class="accent-mark">✦</span>
+    <span>Google Analytics</span><span class="accent-mark">✦</span>
+    <span>SEO / SEM</span><span class="accent-mark">✦</span>
+    <span>Meta Ads</span><span class="accent-mark">✦</span>
+    <span>Brand Building</span><span class="accent-mark">✦</span>
+    <!-- duplicate for seamless loop -->
+    <span>Digital Marketing</span><span class="accent-mark">✦</span>
+    <span>Data Analytics</span><span class="accent-mark">✦</span>
+    <span>Community Management</span><span class="accent-mark">✦</span>
+    <span>Python</span><span class="accent-mark">✦</span>
+    <span>Social Media Strategy</span><span class="accent-mark">✦</span>
+    <span>Google Analytics</span><span class="accent-mark">✦</span>
+    <span>SEO / SEM</span><span class="accent-mark">✦</span>
+    <span>Meta Ads</span><span class="accent-mark">✦</span>
+    <span>Brand Building</span><span class="accent-mark">✦</span>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="section-header">
+    <span class="section-num">01 —</span>
+    <h2 class="section-title">About Me</h2>
+  </div>
+  <div class="about-grid">
+    <div class="about-text">
+      <p>Hi, I'm Oualid — a <strong>Digital Marketing & Data Analytics</strong> professional from Morocco, with a European Bachelor's in Digital Marketing (FEDE) and hands-on experience running campaigns, building communities, and drawing insight from data.</p>
+      <div class="about-highlight">"I combine creative strategy with analytical thinking — because the best marketing decisions are backed by data, and the best data work tells a human story."</div>
+      <p>I founded <strong>GazellePub</strong>, coordinated large-scale brand activations with <strong>Coca-Cola</strong>, and volunteered at <strong>AFCON 2025</strong> — where I worked within an international team across multiple time zones and cultures.</p>
+      <p>I'm an artist at heart. I draw as a way of connecting with people — a quality that shapes how I think about brands, communities, and storytelling. Currently seeking opportunities in Europe.</p>
+    </div>
+    <div class="about-certs">
+      <div class="cert-item">
+        <div class="cert-icon">🎓</div>
+        <div class="cert-info">
+          <div class="cert-name">European Bachelor in Digital Marketing</div>
+          <div class="cert-org">FEDE — with Spanish equivalency document</div>
+        </div>
+      </div>
+      <div class="cert-item">
+        <div class="cert-icon">🐍</div>
+        <div class="cert-info">
+          <div class="cert-name">Python & Data Analytics Certificate</div>
+          <div class="cert-org">ALX Africa</div>
+        </div>
+      </div>
+      <div class="cert-item">
+        <div class="cert-icon">📊</div>
+        <div class="cert-info">
+          <div class="cert-name">Google Data Analytics Certificate</div>
+          <div class="cert-org">Google / Coursera</div>
+        </div>
+      </div>
+      <div class="cert-item">
+        <div class="cert-icon">📱</div>
+        <div class="cert-info">
+          <div class="cert-name">Digital Marketing Certificate</div>
+          <div class="cert-org">LinkedIn Marketing Labs</div>
+        </div>
+      </div>
+      <div class="cert-item">
+        <div class="cert-icon">🌍</div>
+        <div class="cert-info">
+          <div class="cert-name">AFCON 2025 Volunteer</div>
+          <div class="cert-org">Confederation of African Football — Morocco</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills">
+  <div class="section-header">
+    <span class="section-num">02 —</span>
+    <h2 class="section-title">Skills & Tools</h2>
+  </div>
+  <div class="skills-grid">
+    <div class="skill-card">
+      <div class="skill-cat">Digital Marketing</div>
+      <h3>Campaign & Strategy</h3>
+      <div class="skill-tags">
+        <span class="skill-tag">Meta Ads</span>
+        <span class="skill-tag">Google Ads</span>
+        <span class="skill-tag">SEO</span>
+        <span class="skill-tag">SEM</span>
+        <span class="skill-tag">Email Marketing</span>
+        <span class="skill-tag">Content Strategy</span>
+        <span class="skill-tag">Brand Building</span>
+      </div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-cat">Analytics</div>
+      <h3>Data & Insights</h3>
+      <div class="skill-tags">
+        <span class="skill-tag">Python</span>
+        <span class="skill-tag">Pandas</span>
+        <span class="skill-tag">SQL</span>
+        <span class="skill-tag">Google Analytics 4</span>
+        <span class="skill-tag">Matplotlib</span>
+        <span class="skill-tag">Jupyter</span>
+        <span class="skill-tag">A/B Testing</span>
+      </div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-cat">Community</div>
+      <h3>Social & Community</h3>
+      <div class="skill-tags">
+        <span class="skill-tag">Community Management</span>
+        <span class="skill-tag">Social Media</span>
+        <span class="skill-tag">Event Coordination</span>
+        <span class="skill-tag">Copywriting</span>
+        <span class="skill-tag">Influencer Outreach</span>
+        <span class="skill-tag">WordPress</span>
+      </div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-cat">Creative</div>
+      <h3>Design & Content</h3>
+      <div class="skill-tags">
+        <span class="skill-tag">Canva</span>
+        <span class="skill-tag">Adobe Photoshop</span>
+        <span class="skill-tag">Illustration</span>
+        <span class="skill-tag">Visual Storytelling</span>
+        <span class="skill-tag">Video Editing</span>
+      </div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-cat">Technical</div>
+      <h3>Web & Development</h3>
+      <div class="skill-tags">
+        <span class="skill-tag">HTML / CSS</span>
+        <span class="skill-tag">JavaScript</span>
+        <span class="skill-tag">React</span>
+        <span class="skill-tag">WordPress</span>
+        <span class="skill-tag">GitHub</span>
+      </div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-cat">Soft Skills</div>
+      <h3>People & Communication</h3>
+      <div class="skill-tags">
+        <span class="skill-tag">Arabic (native)</span>
+        <span class="skill-tag">French (fluent)</span>
+        <span class="skill-tag">English (professional)</span>
+        <span class="skill-tag">Cross-cultural work</span>
+        <span class="skill-tag">Remote collaboration</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="section-header">
+    <span class="section-num">03 —</span>
+    <h2 class="section-title">Projects</h2>
+  </div>
+  <div class="projects-grid">
+
+    <div class="project-card">
+      <div class="project-thumb" style="background: #f0e8e0; font-size: 3.5rem;">🦌</div>
+      <div class="project-body">
+        <span class="project-tag">Founder / Agency</span>
+        <h3>GazellePub</h3>
+        <p>Founded and operated a digital marketing micro-agency in Morocco. Managed social media strategy, content production, and paid campaigns for local clients — from brand identity to performance reporting.</p>
+        <div class="project-footer">
+          <span>Digital Marketing · Strategy · Design</span>
+          <a href="https://github.com/Oualid-2001" target="_blank" class="project-link">GitHub ↗</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="project-card">
+      <div class="project-thumb" style="background: #e8f0e8;">🏟️</div>
+      <div class="project-body">
+        <span class="project-tag">Event & Volunteer</span>
+        <h3>AFCON 2025 Volunteering</h3>
+        <p>Selected and deployed as a volunteer coordinator at the Africa Cup of Nations in Morocco. Worked within an international, multilingual team — supporting operations, communication, and community engagement across major venues.</p>
+        <div class="project-footer">
+          <span>Event Management · Teamwork · Leadership</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="project-card">
+      <div class="project-thumb" style="background: #e8ecf5;">🥤</div>
+      <div class="project-body">
+        <span class="project-tag">Brand Activation</span>
+        <h3>Coca-Cola Caravan Events</h3>
+        <p>Contributed to large-scale Coca-Cola brand activation campaigns — coordinating on-ground logistics, community interactions, and audience engagement at multiple Moroccan events, reaching thousands of consumers.</p>
+        <div class="project-footer">
+          <span>Brand Activation · Field Marketing</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="project-card">
+      <div class="project-thumb" style="background: #f2eaf5;">📊</div>
+      <div class="project-body">
+        <span class="project-tag">Data Analytics</span>
+        <h3>Marketing Data Projects (ALX)</h3>
+        <p>Completed applied data analytics projects through the ALX program — including exploratory data analysis with Python and Pandas, data visualization with Matplotlib, and performance reporting dashboards using real marketing datasets.</p>
+        <div class="project-footer">
+          <span>Python · Pandas · Visualization</span>
+          <a href="https://github.com/Oualid-2001" target="_blank" class="project-link">GitHub ↗</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="project-card">
+      <div class="project-thumb" style="background: #eaf5f0;">🎨</div>
+      <div class="project-body">
+        <span class="project-tag">Creative</span>
+        <h3>Art & Community Connection</h3>
+        <p>Drawing has always been my way of connecting with people — from community murals to illustrated content for social media. This creative identity informs how I approach branding, storytelling, and community-building in every project.</p>
+        <div class="project-footer">
+          <span>Illustration · Storytelling · Identity</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="project-card">
+      <div class="project-thumb" style="background: #f5eee8;">🌍</div>
+      <div class="project-body">
+        <span class="project-tag">Community Work</span>
+        <h3>Community Hobbies Platform</h3>
+        <p>Developed a digital platform concept for connecting hobby enthusiasts in local communities — combining community management strategy with UX thinking and social content planning to drive engagement and retention.</p>
+        <div class="project-footer">
+          <span>Community · Strategy · UX</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section id="experience">
+  <div class="section-header">
+    <span class="section-num">04 —</span>
+    <h2 class="section-title">Experience</h2>
+  </div>
+  <div class="timeline">
+
+    <div class="timeline-item">
+      <div class="timeline-date">
+        <strong>2023 — Present</strong>
+        Casablanca, Morocco
+      </div>
+      <div class="timeline-content">
+        <h3>Founder & Digital Marketing Lead</h3>
+        <div class="org">GazellePub</div>
+        <ul>
+          <li>Built and managed the agency from scratch — client acquisition, strategy, and execution</li>
+          <li>Ran paid social campaigns (Meta, Google) and organic content strategies for multiple clients</li>
+          <li>Delivered monthly analytics reports tracking KPIs, audience growth, and ROI</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="timeline-item">
+      <div class="timeline-date">
+        <strong>2025</strong>
+        Morocco
+      </div>
+      <div class="timeline-content">
+        <h3>Volunteer Coordinator</h3>
+        <div class="org">AFCON 2025 — Confederation of African Football</div>
+        <ul>
+          <li>Selected from a competitive pool to join the official volunteer program</li>
+          <li>Coordinated logistics and communication within a multilingual international team</li>
+          <li>Supported community engagement and visitor experience at major venues</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="timeline-item">
+      <div class="timeline-date">
+        <strong>2022 — 2023</strong>
+        Morocco
+      </div>
+      <div class="timeline-content">
+        <h3>Field Marketing Coordinator</h3>
+        <div class="org">Coca-Cola Caravan Events</div>
+        <ul>
+          <li>Coordinated on-ground logistics for large-scale consumer activation events</li>
+          <li>Engaged directly with thousands of consumers to strengthen brand connection</li>
+          <li>Collaborated with cross-functional teams on event planning and execution</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="timeline-item">
+      <div class="timeline-date">
+        <strong>2022 — 2024</strong>
+        ALX Africa / Online
+      </div>
+      <div class="timeline-content">
+        <h3>Learner — Data Analytics & Python Track</h3>
+        <div class="org">ALX Africa</div>
+        <p>Completed intensive program covering Python programming, Pandas, data visualization, and applied analytics — with real-world project work and peer-to-peer collaboration.</p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="section-header">
+    <span class="section-num">05 —</span>
+    <h2 class="section-title">Get In Touch</h2>
+  </div>
+  <div class="contact-grid">
+    <div class="contact-left">
+      <p>I'm actively looking for opportunities in Europe — in digital marketing, social media, community management, or data analytics roles. Open to both full-time positions and volunteering programs.</p>
+      <div class="contact-info">
+        <div class="contact-row">
+          <div class="contact-row-icon">✉</div>
+          <div>
+            <div class="contact-row-label">Email</div>
+            <div class="contact-row-value"><a href="mailto:Walid.arrich29@gmail.com">Walid.arrich29@gmail.com</a></div>
+          </div>
+        </div>
+        <div class="contact-row">
+          <div class="contact-row-icon">📞</div>
+          <div>
+            <div class="contact-row-label">Phone / WhatsApp</div>
+            <div class="contact-row-value"><a href="tel:+212699893277">+212 699 893 277</a></div>
+          </div>
+        </div>
+        <div class="contact-row">
+          <div class="contact-row-icon">📍</div>
+          <div>
+            <div class="contact-row-label">Location</div>
+            <div class="contact-row-value">Morocco — Open to relocation in Europe</div>
+          </div>
+        </div>
+      </div>
+      <div class="social-links">
+        <a href="https://github.com/Oualid-2001" target="_blank" class="social-link">GitHub</a>
+        <a href="https://linkedin.com/in/oualid-arrich-239948217" target="_blank" class="social-link">LinkedIn</a>
+        <a href="https://x.com/walid_arrich" target="_blank" class="social-link">Twitter / X</a>
+      </div>
+    </div>
+    <div>
+      <div class="contact-form" id="contactForm">
+        <div class="form-row">
+          <div class="form-field">
+            <label for="name">Your name</label>
+            <input type="text" id="name" placeholder="Jane Smith">
+          </div>
+          <div class="form-field">
+            <label for="email">Your email</label>
+            <input type="email" id="email" placeholder="jane@company.com">
+          </div>
+        </div>
+        <div class="form-field">
+          <label for="subject">Subject</label>
+          <input type="text" id="subject" placeholder="Job opportunity / Collaboration / Other">
+        </div>
+        <div class="form-field">
+          <label for="message">Message</label>
+          <textarea id="message" placeholder="Tell me a bit about the opportunity or project..."></textarea>
+        </div>
+        <button class="btn-send" onclick="sendMessage()">Send Message →</button>
+        <div class="form-success" id="formSuccess">✓ Message sent! I'll get back to you soon.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p>© 2025 Oualid Arrich — Digital Marketing & Data Analytics</p>
+  <p>Made with ❤️ in Morocco</p>
+</footer>
+
+<script>
+function sendMessage() {
+  const name = document.getElementById('name').value.trim();
+  const email = document.getElementById('email').value.trim();
+  const message = document.getElementById('message').value.trim();
+  if (!name || !email || !message) { alert('Please fill in your name, email, and message.'); return; }
+  const subject = document.getElementById('subject').value.trim() || 'Portfolio contact';
+  const body = encodeURIComponent(`Hi Oualid,\n\n${message}\n\nBest,\n${name}\n${email}`);
+  const subjectEnc = encodeURIComponent(subject);
+  window.location.href = `mailto:Walid.arrich29@gmail.com?subject=${subjectEnc}&body=${body}`;
+  document.getElementById('formSuccess').style.display = 'block';
+}
+
+// Smooth nav active state
+const sections = document.querySelectorAll('section[id]');
+const navLinks = document.querySelectorAll('.nav-links a');
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      navLinks.forEach(a => {
+        a.style.color = a.getAttribute('href') === '#' + entry.target.id ? 'var(--accent)' : '';
+      });
+    }
+  });
+}, { threshold: 0.4 });
+sections.forEach(s => observer.observe(s));
+
+// Fade-in animation
+const fadeEls = document.querySelectorAll('.project-card, .skill-card, .timeline-item, .cert-item, .stat-box');
+const fadeObserver = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.style.opacity = '1';
+      entry.target.style.transform = 'translateY(0)';
+    }
+  });
+}, { threshold: 0.1 });
+fadeEls.forEach(el => {
+  el.style.opacity = '0';
+  el.style.transform = 'translateY(16px)';
+  el.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+  fadeObserver.observe(el);
+});
+</script>
+
+<script>
+// ─── THREE.JS 3D HERO SCENE ───
+(function() {
+  const canvas = document.getElementById('spline-canvas');
+  const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+  renderer.setSize(window.innerWidth, window.innerHeight);
+  renderer.toneMapping = THREE.ACESFilmicToneMapping;
+  renderer.toneMappingExposure = 1.2;
+
+  const scene = new THREE.Scene();
+  const camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 0.1, 100);
+  camera.position.set(0, 0, 5);
+
+  // ── Lights ──
+  const ambientLight = new THREE.AmbientLight(0xffffff, 0.3);
+  scene.add(ambientLight);
+
+  const pointLight1 = new THREE.PointLight(0xc8410a, 6, 12); // orange-red accent
+  pointLight1.position.set(3, 2, 3);
+  scene.add(pointLight1);
+
+  const pointLight2 = new THREE.PointLight(0x1a6b5a, 4, 12); // teal
+  pointLight2.position.set(-3, -2, 2);
+  scene.add(pointLight2);
+
+  const pointLight3 = new THREE.PointLight(0xe8956a, 3, 8); // warm accent
+  pointLight3.position.set(0, 3, -2);
+  scene.add(pointLight3);
+
+  // ── Main torus knot ──
+  const knotGeo = new THREE.TorusKnotGeometry(1.2, 0.35, 200, 32, 2, 3);
+  const knotMat = new THREE.MeshStandardMaterial({
+    color: 0x1a1208,
+    metalness: 0.95,
+    roughness: 0.08,
+    envMapIntensity: 1.5,
+  });
+  const knot = new THREE.Mesh(knotGeo, knotMat);
+  scene.add(knot);
+
+  // ── Wireframe overlay on knot ──
+  const wireMat = new THREE.MeshBasicMaterial({
+    color: 0xc8410a,
+    wireframe: true,
+    transparent: true,
+    opacity: 0.07,
+  });
+  const wireKnot = new THREE.Mesh(knotGeo, wireMat);
+  scene.add(wireKnot);
+
+  // ── Outer ring torus ──
+  const ringGeo = new THREE.TorusGeometry(2.2, 0.018, 16, 140);
+  const ringMat = new THREE.MeshBasicMaterial({ color: 0xc8410a, transparent: true, opacity: 0.25 });
+  const ring = new THREE.Mesh(ringGeo, ringMat);
+  ring.rotation.x = Math.PI / 2.5;
+  scene.add(ring);
+
+  // ── Second decorative ring ──
+  const ring2Geo = new THREE.TorusGeometry(2.6, 0.01, 16, 140);
+  const ring2Mat = new THREE.MeshBasicMaterial({ color: 0x1a6b5a, transparent: true, opacity: 0.18 });
+  const ring2 = new THREE.Mesh(ring2Geo, ring2Mat);
+  ring2.rotation.x = Math.PI / 3;
+  ring2.rotation.z = Math.PI / 6;
+  scene.add(ring2);
+
+  // ── Floating particles ──
+  const particleCount = 280;
+  const positions = new Float32Array(particleCount * 3);
+  const colors = new Float32Array(particleCount * 3);
+  const c1 = new THREE.Color(0xc8410a);
+  const c2 = new THREE.Color(0x1a6b5a);
+  const c3 = new THREE.Color(0xe8956a);
+  for (let i = 0; i < particleCount; i++) {
+    const r = 2.5 + Math.random() * 3;
+    const theta = Math.random() * Math.PI * 2;
+    const phi = Math.acos(2 * Math.random() - 1);
+    positions[i * 3]     = r * Math.sin(phi) * Math.cos(theta);
+    positions[i * 3 + 1] = r * Math.sin(phi) * Math.sin(theta);
+    positions[i * 3 + 2] = r * Math.cos(phi);
+    const pick = Math.random();
+    const col = pick < 0.4 ? c1 : pick < 0.7 ? c2 : c3;
+    colors[i * 3] = col.r; colors[i * 3 + 1] = col.g; colors[i * 3 + 2] = col.b;
+  }
+  const partGeo = new THREE.BufferGeometry();
+  partGeo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+  partGeo.setAttribute('color', new THREE.BufferAttribute(colors, 3));
+  const partMat = new THREE.PointsMaterial({ size: 0.04, vertexColors: true, transparent: true, opacity: 0.7 });
+  const particles = new THREE.Points(partGeo, partMat);
+  scene.add(particles);
+
+  // ── Mouse reactive ──
+  let mouseX = 0, mouseY = 0;
+  document.addEventListener('mousemove', e => {
+    mouseX = (e.clientX / window.innerWidth - 0.5) * 2;
+    mouseY = (e.clientY / window.innerHeight - 0.5) * 2;
+  });
+
+  // ── Resize ──
+  window.addEventListener('resize', () => {
+    camera.aspect = window.innerWidth / window.innerHeight;
+    camera.updateProjectionMatrix();
+    renderer.setSize(window.innerWidth, window.innerHeight);
+  });
+
+  // ── Animate ──
+  let targetRotX = 0, targetRotY = 0;
+  const clock = new THREE.Clock();
+  function animate() {
+    requestAnimationFrame(animate);
+    const t = clock.getElapsedTime();
+
+    targetRotY += (mouseX * 0.4 - targetRotY) * 0.04;
+    targetRotX += (-mouseY * 0.3 - targetRotX) * 0.04;
+
+    knot.rotation.x = t * 0.18 + targetRotX;
+    knot.rotation.y = t * 0.24 + targetRotY;
+    wireKnot.rotation.copy(knot.rotation);
+
+    ring.rotation.y = t * 0.12;
+    ring.rotation.z = t * 0.06;
+    ring2.rotation.x = Math.PI / 3 + t * 0.08;
+    ring2.rotation.y = t * 0.1;
+
+    particles.rotation.y = t * 0.04;
+    particles.rotation.x = t * 0.02;
+
+    pointLight1.position.x = Math.sin(t * 0.7) * 3.5;
+    pointLight1.position.y = Math.cos(t * 0.5) * 2.5;
+    pointLight2.position.x = Math.cos(t * 0.6) * -3;
+    pointLight2.position.y = Math.sin(t * 0.4) * -2;
+
+    renderer.render(scene, camera);
+  }
+  animate();
+})();
+</script>
+
+</body>
+</html>
